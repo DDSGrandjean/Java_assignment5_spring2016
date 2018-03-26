@@ -1,160 +1,201 @@
 /**
-	DYLAN GRANDJEAN -
-	The Stock Class takes in information about a stock and calculates
-	the value of that stock and its increase/decrease percentage.
+DYLAN GRANDJEAN
+This class can be used to represent a Stock item.
 */
+
 public class Stock
 {
-	//Field declaration
-	private String symbol;
-	private String name;
-	private int shares;
-	private double previousClosingPrice;
-	private double currentPrice;
+	private String symbol;					// Stock ticker symbol
+	private String name;					// Company name
+	private int shares;						// Number of shares owned
+	private double previousClosingPrice;	// Previous closing price
+	private double currentPrice;			// Most recent price
 
 	/**
-		Constructor #1
-		@param aSymbol stores the value of aSymbol in the field symbol.
-		@param aName stores the value of aName in the field name.
+	Stock class constructor
+	@param sym		the stock ticker symbol
+	@param company	the stock company name
 	*/
-	public Stock(String aSymbol, String aName)
+
+	public Stock(String sym, String company)
 	{
-		symbol = aSymbol;
-		name = aName;
+		// Set these as user chooses
+		symbol = sym;
+		name = company;
+
+		// Remaining fields are set to their default values
 	}
 
 	/**
-		Constructor #2
-		@param aSymbol stores the value of aSymbol in the field symbol.
-		@param aName stores the value of aName in the field name.
-		@param aShares stores the value of aShares in the field shares if it is valid.
-		@param aCurrentPrice stores the value of aCurrentPrice in the field currentPrice if it is valid.
+	Stock class constructor
+	@param sym		the stock ticker symbol
+	@param company	the stock company name
+	@param sh		number of shares owned
+	@param curr		current stock price
 	*/
-	public Stock(String aSymbol, String aName, int aShares, double aCurrentPrice)
+
+	public Stock(String sym, String company,
+		int sh, double curr)
 	{
-		symbol = aSymbol;
-		name = aName;
-		//Sends the parameters through mutators to test their validity
-		setShares(aShares);
-		setCurrentPrice(aCurrentPrice);
+		// Set these as user chooses
+		symbol = sym;
+		name = company;
+
+		// Use the mutators to validate these user choices
+		setShares(sh);
+		setCurrentPrice(curr);
+
+		// Remaining field set to its default value
 	}
 
 	/**
-		The currentValue method determines the current value of the shares and returns the total price.
-		@return The total price.
+	Method getSymbol returns the ticker symbol
+	@return		the ticker symbol for this stock
 	*/
-	public double currentValue()
-	{
-		double currentValue = shares * currentPrice;
-		return currentValue;
-	}
 
-	/**
-		The changePercent method determines the increase or decrease percentage of the stock in comparison
-		to the previous entry for that stock.
-		@return The increase or decrease percentage of the stock in relation to its previous price.
-	*/
-	public double changePercent()
-	{
-		double percentage;
-
-		//Check for a possible division by 0
-		if (previousClosingPrice > 0)
-			percentage = (currentPrice - previousClosingPrice) / previousClosingPrice;
-		//If division by 0 occures, set the percentage to positive infinity
-		else
-			percentage = Double.POSITIVE_INFINITY;
-
-		return percentage;
-	}
-
-	/**
-		The toString method returns a formatted String.
-		@return A formatted String containing information about the current stock.
-	*/
-	public String toString()
-	{
-		return String.format("Symbol:                 %s" +
-			   				 "\nName:                   %s" +
-		       				 "\nShares:                 %d" +
-		     			     "\nPrevious closing price: %,.2f" +
-		       				 "\nCurrent price:          %,.2f",
-		       				 symbol, name, shares, previousClosingPrice, currentPrice);
-	}
-
-	/**
-		The setCurrentPrice method stores a value in the currentPrice field.
-		@param aCurrentPrice The value to store in currentPrice.
-	*/
-	public void setCurrentPrice(double aCurrentPrice)
-	{
-		//Only change the value of currentPrice if the new value is greater than or equal to 0
-		if (aCurrentPrice >= 0)
-		{
-			previousClosingPrice = currentPrice;
-			currentPrice = aCurrentPrice;
-		}
-		//If the value is less than 0, display an error
-		else
-			System.out.printf("New current price value invalid: %.2f\n", aCurrentPrice);
-	}
-
-	/**
-		The setShares method stores a value in the shares field.
-		@param aShares The value to store in shares.
-	*/
-	public void setShares(int aShares)
-	{
-		//Only change the value of shares if the new value is greater than or equal to 0
-		if (aShares >= 0)
-			shares = aShares;
-		//If the value is less than 0, display an error
-		else
-			System.out.printf("New shares invalid: %d\n", aShares);
-	}
-
-	/**
-		The getSymbol method returns a Stock object's symbol.
-		@return The value in the symbol field.
-	*/
 	public String getSymbol()
 	{
+		// Return the ticker symbol
 		return symbol;
 	}
 
 	/**
-		The getName method returns a Stock object's name.
-		@return The value in the name field.
+	Method getName returns the name of the company
+	@return		the company name
 	*/
+
 	public String getName()
 	{
+		// Return the company name
 		return name;
 	}
 
 	/**
-		The getShares method returns a Stock object's shares.
-		@return The value in the shares field.
+	Method getShares returns the number of shares owned
+	@return		number of shares owned
 	*/
+
 	public int getShares()
 	{
+		// Return the number of shares owned
 		return shares;
 	}
 
 	/**
-		The getPreviousClosingPrice method returns a Stock object's previous closing price.
-		@return The value in the previousClosingPrice field.
+	Method getPreviousClosingPrice returns the previous closing price
+	@return		the previous closing price
 	*/
+
 	public double getPreviousClosingPrice()
 	{
+		// Return the previous closing price
 		return previousClosingPrice;
 	}
 
 	/**
-		The getCurrentPrice method returns a Stock object's current price.
-		@return The value in the currentPrice field.
+	Method getCurrentPrice returns the current price of the stock
+	@return		the current stock price
 	*/
+
 	public double getCurrentPrice()
 	{
+		// Return the current stock price
 		return currentPrice;
+	}
+
+	/**
+	Method currentValue computes and returns the current value of the stock
+	@return		the current value of the stock
+	*/
+
+	public double currentValue()
+	{
+		// Compute and return the current value of the stock
+		return currentPrice * shares;
+	}
+
+	/**
+	Method setShares changes the number of shares
+	@param howMany	the new number of shares
+	*/
+
+
+	public void setShares(int howMany)
+	{
+		// The new number of shares (howMany) must be at least 0
+		if ( howMany < 0 )
+			System.out.println( "New Shares Invalid: "
+				+ howMany );
+		else
+			// Valid "howMany" becomes new value of shares.
+			shares = howMany;
+	}
+
+	/**
+	Method setCurrentPrice changes the current price
+	@param price		the new current price
+	*/
+
+	public void setCurrentPrice(double price)
+	{
+		// The new price must be at least 0
+		if ( price < 0 )
+			System.out.println( "New Current Price Invalid: "
+				+ price );
+		else
+		{
+			// Reset the previous closing price and then
+			// change current price to "price"
+			previousClosingPrice = currentPrice;
+			currentPrice = price;
+		}
+	}
+
+	/**
+	Method changePercent computes the change percent from yesterday to today
+	@return		the change percent
+	*/
+
+	public double changePercent()
+	{
+		double pct;
+
+		// Make sure not to divide by 0
+		if ( previousClosingPrice > 0 )
+			pct = (currentPrice - previousClosingPrice) /
+				previousClosingPrice;
+		else
+		{
+			// When previous closing price is 0, return "infinity"
+			pct = Double.POSITIVE_INFINITY;
+		}
+
+		// Return the change percent
+		return pct;
+	}
+
+	/**
+	Method toString returns a string formatted to represent the current
+	state of the Stock object
+	@return		the formatted string representing the current state of the
+				Stock object
+	*/
+
+	public String toString()
+	{
+		// Format to show appropriate alignment, commas, decimal places
+		// and return formatted String.
+		String str =
+			"Symbol:                 " + symbol
+			+ "\nName:                   " + name
+			+ "\nShares:                 "
+			+ String.format( "%,d", shares )
+			+ "\nPrevious Closing Price: "
+			+ String.format( "$%,.2f", previousClosingPrice )
+			+ "\nCurrent Price:          "
+			+ String.format( "$%,.2f", currentPrice );
+
+		// Return the formatted String
+		return str;
 	}
 }
